@@ -7,7 +7,5 @@ import me.malkon.cursomc.domain.Estado;
 
 @Repository
 public interface EstadoRepository extends JpaRepository<Estado, Integer> {
-	
-	
 
 }

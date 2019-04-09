@@ -7,7 +7,5 @@ import me.malkon.cursomc.domain.Cidade;
 
 @Repository
 public interface CidadeRepository extends JpaRepository<Cidade, Integer> {
-	
-	
 
 }

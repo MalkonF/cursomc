@@ -7,7 +7,5 @@ import me.malkon.cursomc.domain.Endereco;
 
 @Repository
 public interface EnderecoRepository extends JpaRepository<Endereco, Integer> {
-	
-	
 
 }
