@@ -3,10 +3,12 @@ package me.malkon.cursomc.services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import me.malkon.cursomc.domain.Categoria;
 import me.malkon.cursomc.repositories.CategoriaRepository;
+import me.malkon.cursomc.services.exceptions.DataIntegrityException;
 import me.malkon.cursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -28,8 +30,17 @@ public class CategoriaServices {
 						// como atualização
 		return repo.save(obj);
 	}
-	
+
 	public Categoria update(Categoria obj) {
 		return repo.save(obj);
+	}
+
+	public void delete(Integer id) {
+		find(id);
+		try {
+			repo.deleteById(id);
+		} catch (DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possível excluir uma categoria que possui produtos");
+		}
 	}
 }
