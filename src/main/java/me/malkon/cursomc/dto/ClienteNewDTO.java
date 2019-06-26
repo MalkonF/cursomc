@@ -2,21 +2,43 @@ package me.malkon.cursomc.dto;
 
 import java.io.Serializable;
 
-/*Feito para cadastra o cliente tudo numa vez só com esses dados.*/
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
+import me.malkon.cursomc.services.validation.ClienteInsert;
+
+/*Feito para cadastra o cliente tudo numa vez só com esses dados.
+ * 
+ * @ClientInsert é uma anotação customizada por isso tem que ser colocada acima da classe*/
+@ClienteInsert
 public class ClienteNewDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@NotEmpty(message = "Preenchimento obrigatório") // @NotEmpty só se aplica p strings
+	@Length(min = 5, max = 120, message = "O tamanho deve ser entre 5 e 120 caracteres")
 	private String nome;
+	@NotEmpty(message = "Preenchimento obrigatório")
+	@Email(message = "Email inválido")
 	private String email;
+	/*
+	 * Se o campo fosse somente cpf ou cnpj o spring tem a anotação @CPF ou @CNPJ p
+	 * validar. Mas esse campo aqui depende de outro campo(tipo), por isso vamos
+	 * criar uma validação customizada.
+	 */
+	@NotEmpty(message = "Preenchimento obrigatório")
 	private String cpfOuCnpj;
 	private Integer tipo;
-
+	@NotEmpty(message = "Preenchimento obrigatório")
 	private String logradouro;
+	@NotEmpty(message = "Preenchimento obrigatório")
 	private String numero;
 	private String complemento;
 	private String bairro;
+	@NotEmpty(message = "Preenchimento obrigatório")
 	private String cep;
-
+	@NotEmpty(message = "Preenchimento obrigatório")
 	private String telefone1;
 	private String telefone2;
 	private String telefone3;
