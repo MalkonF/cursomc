@@ -13,15 +13,20 @@ import javax.persistence.ManyToOne;
 public class Cidade implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
-	
+	/*
+	 * Muitos para um - vai no lado que tem muitos e poe @ManyToOne e no lado que
+	 * tem um @OneToMany. estado_id nome do campo da ch estrangeira da tabela
+	 * cidades
+	 */
+
 	@ManyToOne
-	@JoinColumn(name="estado_id")
-	private Estado estado;
+	@JoinColumn(name = "estado_id")
+	private Estado estado;// Uma cidade só pode ter 1 estado então não é List e sim uma variável private
 
 	public Cidade() {
 		super();
@@ -82,7 +87,5 @@ public class Cidade implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
 
 }

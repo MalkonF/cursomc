@@ -19,13 +19,13 @@ public class ClienteDTO implements Serializable {
 	private String nome;
 
 	@NotEmpty(message = "Preenchimento obrigatório")
-	@Email(message = "Email inválido")
+	@Email(message = "Email inválido") // valida se tem @, domínio
 	private String email;
 
 	public ClienteDTO() {
 	}
 
-	public ClienteDTO(Cliente obj) {
+	public ClienteDTO(Cliente obj) {// recebe um cliente e transforma em clienteDTO
 		id = obj.getId();
 		nome = obj.getNome();
 		email = obj.getEmail();

@@ -65,10 +65,15 @@ public class CursomcApplication implements CommandLineRunner {
 		SpringApplication.run(CursomcApplication.class, args);
 	}
 
+	/*
+	 * método run executa antes de
+	 * SpringApplication.run(CursomcApplication.class,args). Para usá-lo devemos
+	 * implementar CommandLineRunner na classe
+	 */
 	@Override
 	public void run(String... args) throws Exception {
 
-		Categoria cat1 = new Categoria(null, "Informática");
+		Categoria cat1 = new Categoria(null, "Informática"); // id é gerado automaticamente, por isso coloca-se null
 		Categoria cat2 = new Categoria(null, "Escritório");
 		Categoria cat3 = new Categoria(null, "Cama mesa e banho");
 		Categoria cat4 = new Categoria(null, "Eletrônicos");
@@ -79,7 +84,11 @@ public class CursomcApplication implements CommandLineRunner {
 		Produto p1 = new Produto(null, "Computador", 2000.00);
 		Produto p2 = new Produto(null, "Impressora", 800.00);
 		Produto p3 = new Produto(null, "Mouse", 80.00);
-
+		/*
+		 * aqui usa-se get p puxar a lista de produtos para adicionar os produtos no
+		 * final dela. Se usarmos setProdutos, os produtos que já constam na lista vão
+		 * ser apagados p inserir os novos.
+		 */
 		cat1.getProdutos().addAll(Arrays.asList(p1, p2, p3));
 		cat2.getProdutos().addAll(Arrays.asList(p2));
 
@@ -87,6 +96,11 @@ public class CursomcApplication implements CommandLineRunner {
 		p2.getCategorias().addAll(Arrays.asList(cat1, cat2));
 		p3.getCategorias().addAll(Arrays.asList(cat1));
 
+		/*
+		 * cria os objetos através da instanciação, transforma os em lista e insere
+		 * todos objetos no banco de dados. Poderia ser inserido cada objeto por vez,
+		 * mas fica mais prático transformar todos numa lista e inserir de uma vez só.
+		 */
 		categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7));
 		produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
 
@@ -99,12 +113,15 @@ public class CursomcApplication implements CommandLineRunner {
 
 		est1.getCidades().addAll(Arrays.asList(c1));
 		est2.getCidades().addAll(Arrays.asList(c2, c3));
-
+		/*
+		 * primeiro tem q salvar o estado depois as cidades pq um estado pode n ter
+		 * nenhuma cidade, mas uma cidade tem que ter uma estado
+		 */
 		estadoRepository.saveAll(Arrays.asList(est1, est2));
 		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
 
 		Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "36378912377", TipoCliente.PESSOAFISICA);
-
+		// adiciona os telefone na lista que está em Cliente
 		cli1.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
 
 		Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apto 303", "Jardim", "38220834", cli1, c1);
@@ -119,7 +136,8 @@ public class CursomcApplication implements CommandLineRunner {
 
 		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli1, e1);
 		Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017 19:35"), cli1, e2);
-
+		// id pag é nulo pq a id vai ser gerada na classe Pedido. Em Pagamento tem
+		// anotação @MapsId
 		Pagamento pagto1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 6);
 		ped1.setPagamento(pagto1);
 
@@ -146,4 +164,4 @@ public class CursomcApplication implements CommandLineRunner {
 		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
 
 	}
-}
+}// continuar vendo perguntas parei aula 13

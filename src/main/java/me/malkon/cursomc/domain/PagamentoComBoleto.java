@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import me.malkon.cursomc.domain.enums.EstadoPagamento;
 
+/*Aqui n tem ch primaria, ela é herdada da superclasse*/
 @Entity
 public class PagamentoComBoleto extends Pagamento {
 
@@ -48,3 +49,7 @@ public class PagamentoComBoleto extends Pagamento {
 	}
 
 }
+/*
+ * Nas subclasses n precisam ser implementados hashcode e equals pq o id ta na
+ * classe Pagamento e a comparação já é feita na superclasse, essa aqui herda.
+ */

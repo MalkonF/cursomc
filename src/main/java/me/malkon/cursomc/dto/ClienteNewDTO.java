@@ -2,6 +2,7 @@ package me.malkon.cursomc.dto;
 
 import java.io.Serializable;
 
+/*Feito para cadastra o cliente tudo numa vez só com esses dados.*/
 public class ClienteNewDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 

@@ -8,13 +8,15 @@ import org.hibernate.validator.constraints.Length;
 
 import me.malkon.cursomc.domain.Categoria;
 
-public class CategoriaDTO implements Serializable {// serializable faz com que o obj fiquei fácil trafegar em rede e ser
-													// gravado em arquivos
+/*É um objeto que vai definir os dados que vai trafegar qnd fzr operações básicas de categoria
+ * 
+ * serializable faz com que o obj fique fácil trafegar em rede e ser gravado em arquivos*/
+public class CategoriaDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
-	@NotEmpty(message = "Preenchimento obrigatório")
+	@NotEmpty(message = "Preenchimento obrigatório") // lança a msg se tiver vazio
 	@Length(min = 5, max = 80, message = "O tamanho deve ser entre 5 e 80 caracteres")
 	private String nome;
 
@@ -22,7 +24,7 @@ public class CategoriaDTO implements Serializable {// serializable faz com que o
 
 	}
 
-	public CategoriaDTO(Categoria obj) {
+	public CategoriaDTO(Categoria obj) {// aqui ele recebe um objeto Categoria e converte para CategoriaDTO
 		id = obj.getId();
 		nome = obj.getNome();
 	}

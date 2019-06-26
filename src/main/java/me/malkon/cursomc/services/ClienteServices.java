@@ -39,7 +39,7 @@ public class ClienteServices {
 
 	}
 
-	@Transactional
+	@Transactional // vai inserir o cliente e os seus endereços na mesma transação do bd
 	public Cliente insert(Cliente obj) {
 		obj.setId(null);
 		obj = repo.save(obj);
@@ -49,7 +49,9 @@ public class ClienteServices {
 
 	public Cliente update(Cliente obj) {
 		Cliente newObj = find(obj.getId());
-		updateData(newObj, obj);
+		updateData(newObj, obj);// atualize os dados do novo objeto criado com base no objeto que veio como
+								// argumento. Assim qd atualizar so o nome e email n vai ficar null os outros
+								// campos
 		return repo.save(newObj);
 	}
 
@@ -71,11 +73,11 @@ public class ClienteServices {
 		return repo.findAll(pageRequest);
 	}
 
-	public Cliente fromDTO(ClienteDTO objDto) {
+	public Cliente fromDTO(ClienteDTO objDto) {// instanciar cliente básico a partir DTO
 		return new Cliente(objDto.getId(), objDto.getNome(), objDto.getEmail(), null, null);
 	}
 
-	public Cliente fromDTO(ClienteNewDTO objDto) {
+	public Cliente fromDTO(ClienteNewDTO objDto) {// sobrecarga do método acima
 		Cliente cli = new Cliente(null, objDto.getNome(), objDto.getEmail(), objDto.getCpfOuCnpj(),
 				TipoCliente.toEnum(objDto.getTipo()));
 		Cidade cid = new Cidade(objDto.getCidadeId(), null, null);

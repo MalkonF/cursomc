@@ -23,12 +23,11 @@ public class Pedido implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+	// formatar a data de acordo com essa máscara
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private Date instante;
-
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
 	private Pagamento pagamento;
 
@@ -39,10 +38,11 @@ public class Pedido implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "endereco_de_entrega_id")
 	private Endereco enderecoDeEntrega;
-
+	// do outro lado tem o ItemPedido que tem o obj id, o id é um obj auxiliar que
+	// tem a referencia p o pedido
 	@OneToMany(mappedBy = "id.pedido")
-	private Set<ItemPedido> itens = new HashSet<>();//Set garante que n terá nenhum item repetido no pedido
-	
+	private Set<ItemPedido> itens = new HashSet<>();// Set garante que n terá nenhum item repetido no pedido
+
 	public Pedido() {
 
 	}

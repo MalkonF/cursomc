@@ -27,7 +27,12 @@ public class Produto implements Serializable {
 	private Integer id;
 	private String nome;
 	private Double preco;
-
+	/*
+	 * Qd se tem um relacionamento de muitos p muitos é criado uma terceira tabela
+	 * contendo os ids das duas tabelas. PRODUTO_CATEGORIA é o nome dessa tabela.
+	 * produto_id é o campo da tabela correspondente ao cod do produto(ch
+	 * estrangeira) categoria_id ch estrangeira que corresponde ao cod da categoria
+	 */
 	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name = "PRODUTO_CATEGORIA", joinColumns = @JoinColumn(name = "produto_id"), inverseJoinColumns = @JoinColumn(name = "categoria_id"))
@@ -36,7 +41,7 @@ public class Produto implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy = "id.produto")
 	private Set<ItemPedido> itens = new HashSet<>();
-	
+
 	public Produto(Integer id, String nome, Double preco) {
 		super();
 		this.id = id;
@@ -47,12 +52,12 @@ public class Produto implements Serializable {
 	public Produto() {
 		super();
 	}
-	
+
 	@JsonIgnore
 	public List<Pedido> getPedidos() {
-		
+
 		List<Pedido> lista = new ArrayList<>();
-		for(ItemPedido x : itens) {
+		for (ItemPedido x : itens) {
 			lista.add(x.getPedido());
 		}
 		return lista;

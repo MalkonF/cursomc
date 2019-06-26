@@ -11,11 +11,27 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class ItemPedido implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	/*
+	 * Em @JsonIgnore não vai serializar ngm, nem o pedido nem o produto. Na outra
+	 * ponta em Pedidos a referencia q aponta p aqui vai ser serializada normalmente
+	 * 
+	 * 
+	 * Essa é uma classe de associação, por isso não tem id próprio. Quem identifica
+	 * ela são os 2 objetos associados a ela(como ch estrangeira), no caso, o
+	 * produto e o pedido, através da classe ItemPEdidoPK que representa uma chave
+	 * composta. Qd uma entidade tem como atributo uma outra classe, vc tem que ir
+	 * na outra classe e colocar a anotação @Embeddable p dizer q ela vai ser um
+	 * subtipo. Vai ser criado somente 1 tabela ItemPedido e nessa tabela vai ter o
+	 * campo pedido_id e produto_id referente a classe ItemPedidoPK. Assim consegue
+	 * trabalhar com o id do item pedido como sendo apenas um valor, ou seja, uma
+	 * entidade.
+	 *
+	 */
 
 	@JsonIgnore
 	@EmbeddedId
 	private ItemPedidoPK id = new ItemPedidoPK();
-	
+
 	private Double desconto;
 	private Integer quantidade;
 	private Double preco;
@@ -32,15 +48,19 @@ public class ItemPedido implements Serializable {
 		this.quantidade = quantidade;
 		this.preco = preco;
 	}
-	
+
+	/*
+	 * Se deixar sem @JsonIgnore, vai ser serializado os pedidos associados aos produtos.
+	 * Tudo q começa com get é serializado.
+	 */
 	@JsonIgnore
 	public Pedido getPedido() {
-		
+
 		return id.getPedido();
 	}
 
 	public Produto getProduto() {
-		
+
 		return id.getProduto();
 	}
 
@@ -75,7 +95,7 @@ public class ItemPedido implements Serializable {
 	public void setPreco(Double preco) {
 		this.preco = preco;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -100,8 +120,5 @@ public class ItemPedido implements Serializable {
 			return false;
 		return true;
 	}
-
-
-	
 
 }

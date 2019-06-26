@@ -30,13 +30,36 @@ public class Cliente implements Serializable {
 	private String nome;
 	private String email;
 	private String cpfOuCnpj;
+	/*
+	 * O TipoCliente vai ser armazenado internamente como um inteiro, mas p o mundo
+	 * externo a classe vai expor um TipoCliente
+	 */
 	private Integer tipo;
 
-	// @JsonManagedReference cli serializa vários endereços, mas end n podem
-	// serializar mais de 1 cli
+	/*
+	 * @JsonManagedReference cli serializa vários endereços, mas end n podem
+	 * serializar mais de 1 cli. Na classe endereço fica o @JsonBackReference
+	 * dizendo que ele n pode serializar os clientes
+	 * 
+	 * cascadeType.All toda operação q for feita no cliente vai ser refletida no
+	 * endereço, se excluir cliente os endereços anexados vao ser excluídos.
+	 * 
+	 * List é uma interface e n pode ser instanciada, por isso tem que achar uma
+	 * classe que implementa ela(ArrayList)
+	 */
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
 	private List<Endereco> enderecos = new ArrayList<>();
 
+	/*
+	 * Como o modelo telefone tem somente 1 campo string n vai ser necessário criar
+	 * uma classe para ele. Vai ser implementado uma coleção de strings associadas
+	 * ao cliente. Set não aceita repetição.
+	 * 
+	 * @ElementCollection - P mapear e o jpa criar a tabela como entidade fraca
+	 * associada a id do cliente; classe embutida.
+	 * 
+	 * @CollectionTable - o nome da tabela que vai guardar os telefones
+	 */
 	@ElementCollection
 	@CollectionTable(name = "TELEFONE")
 	private Set<String> telefones = new HashSet<>();

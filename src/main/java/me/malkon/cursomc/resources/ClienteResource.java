@@ -1,5 +1,7 @@
 package me.malkon.cursomc.resources;
 
+//Nome do pct é resource(recursos) pq é onde por padrão são colocadas as classes que são controladores REST
+//Como o projeto é orientado a modelo de domínio sempre use o nome do domínio correspondente antes,ex: ClienteResource, ClienteRepository, ClienteService
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;

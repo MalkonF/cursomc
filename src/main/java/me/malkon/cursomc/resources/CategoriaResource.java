@@ -21,6 +21,7 @@ import me.malkon.cursomc.domain.Categoria;
 import me.malkon.cursomc.dto.CategoriaDTO;
 import me.malkon.cursomc.services.CategoriaServices;
 
+/*Indica que a classe toda vai ser um controlador rest e vai responder pelo endpoint abaixo. Sempre use nomes de endpoints no plural*/
 @RestController
 @RequestMapping(value = "/categorias")
 public class CategoriaResource {
@@ -28,33 +29,65 @@ public class CategoriaResource {
 	@Autowired
 	private CategoriaServices service;
 
+	/*
+	 * para o método ter alguma função REST tem que associar a alguns dos verbos do
+	 * http. O id diz que o endpoint n vai ser formado so por categorias e sim
+	 * categoria mais o id. PathVariable diz que o id que vc receber na url vai ser
+	 * passado p esse método find. ResponseEntity encapsula/armazena varias
+	 * informações de uma resposta http p um serviço REST.
+	 * 
+	 * 
+	 * Aqui se der exceção no service poderia ter um try/catch p capturar a exceção
+	 * e tratar ela mas em resources não é aconselhável ter métodos grandes e sim
+	 * menores. Por isso vamos criar um handler q é um obj especial q vai
+	 * interceptar aqui caso ocorra uma exceção. O handler q vai lançar a resposta
+	 * http adequada, no caso 404. P isso foi criado a classe
+	 * ResourceExceptionHandler
+	 */
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Categoria> find(@PathVariable Integer id) {
 
 		Categoria obj = service.find(id);
-
+		/*
+		 * operação ocorreu com sucesso(ok) e a resposta vai ter como corpo o objeto que
+		 * busquei:obj
+		 */
 		return ResponseEntity.ok().body(obj);
 
 	}
 
-	// ResponseEntity recebe um retorno de resposta http e void diz que o corpo da
-	// resposta é vazio
+	/*
+	 * ResponseEntity recebe um retorno de resposta http e void diz que o corpo da
+	 * resposta é vazio
+	 * 
+	 * @Valid valida a informação, se o nome tiver vazio, por exemplo, vai retornar
+	 * um bad request. O @Valid ele valida as informações a partir do cliente, no
+	 * sentido Cliente - Controller - Service...
+	 * 
+	 * @RequestBody obj vai ser construido a partir dos dados JSON q vc enviar. O
+	 * JSON vai ser convertido p objeto java automaticamente
+	 */
 	@RequestMapping(method = RequestMethod.POST) // método vai ser mapeado no endpoint categorias tipo POST
-	public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO objDto) {// obj vai ser construido a partir dos
-																					// dados JSON.// JSON vai ser
-																					// convertido p obj javaF
+	public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO objDto) {
+
 		Categoria obj = service.fromDTO(objDto);
-		obj = service.insert(obj);
+		obj = service.insert(obj);// retorna o objeto após insert ser executado
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-		return ResponseEntity.created(uri).build(); // retorna http status created
+		return ResponseEntity.created(uri)
+				.build(); /*
+							 * Pega o id que o banco gerou e fornece ele p gerar a URI do novo objeto.
+							 * fromCurrentRequest() pega a url que usamos p inserir /categorias/ retorna
+							 * http status created - 201 junto com a uri do novo recurso criado
+							 */
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@Valid @RequestBody CategoriaDTO objDto, @PathVariable Integer id) {
 		Categoria obj = service.fromDTO(objDto);
-		obj.setId(id);
+		obj.setId(id);// garante que a categoria atualizada vai ser a que vc passou na url
 		obj = service.update(obj);
-		return ResponseEntity.noContent().build();
+		return ResponseEntity.noContent().build();// nocontent retorna conteúdo vazio
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
@@ -63,29 +96,47 @@ public class CategoriaResource {
 		return ResponseEntity.noContent().build();
 	}
 
+	/*
+	 * Aqui será listada todas as categorias de uma vez, mas qnd vc solicita todas
+	 * as categorias elas vem associada com os produtos pendurados. Para vir somente
+	 * as categorias tem que usar DTO(Data Transfer Object) objeto de tansf de
+	 * dados. Ele é um obj que vai ter somente os dados que vc quer q alguma
+	 * operação. Por isso foi criado o pct DTO
+	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<CategoriaDTO>> findAll() {
-
-		List<Categoria> list = service.findAll();
+		List<Categoria> list = service.findAll();// busca lista categorias no banco
 		List<CategoriaDTO> listDto = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
-		// converte lista para listaDto
+		/*
+		 * converte lista para listaDto. P cada elemento da lista vai ser instanciado um
+		 * objeto DTO correspondente. Aqui qnd ele passa obj para CategoriaDTO, o obj
+		 * passa so o nome e a id para o dto p simplificar informações. stream vai
+		 * percorrer a lista, map vai executar uma operação p cada elemento da lista.
+		 * cada elemento da lista é obj e p cada elemento obj na lista vou usar o
+		 * operador -> p criar função anonima q recebe objeto e instancia CategoriaDTO
+		 * com obj como argumento. Feito isso tem que voltar o stream de objeto p o tipo
+		 * lista. Collectors.tolist()
+		 */
 		return ResponseEntity.ok().body(listDto);
 
 	}
 
-	// faz o endpoint p chamar o método p listar as categorias paginadas.
+	/*
+	 * faz o endpoint p chamar o método p listar as categorias paginadas.Isso é
+	 * feito p questões de performance se vc tiver muita informações imagina vir
+	 * tudo de uma vez?
+	 * 
+	 * @RequestParam é como se fosse o @PathVariable só que não é com caminhos / e
+	 * sim com parametros ?page=0&linesPerPage=3 o defaultValue vai valer se n for
+	 * informado esses dados
+	 */
 	@RequestMapping(value = "/page", method = RequestMethod.GET) // concatena /pages com /categorias
 	public ResponseEntity<Page<CategoriaDTO>> findPage(@RequestParam(value = "page", defaultValue = "0") Integer page,
-			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage, // parametros opcionais,
-																								// nome parametro
-																								// linesPerPage, valor
-																								// default 24. Se n
-																								// colocar nada esse
-																								// valor será usado
+			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
 			@RequestParam(value = "orderBy", defaultValue = "nome") String orderBy,
 			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
 		Page<Categoria> list = service.findPage(page, linesPerPage, orderBy, direction);
-		Page<CategoriaDTO> listDto = list.map(obj -> new CategoriaDTO(obj));
+		Page<CategoriaDTO> listDto = list.map(obj -> new CategoriaDTO(obj));// converte Categoria p CategoriaDTO
 		return ResponseEntity.ok().body(listDto);
 	}
 

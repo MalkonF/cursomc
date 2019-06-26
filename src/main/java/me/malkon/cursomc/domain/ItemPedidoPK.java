@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 public class ItemPedidoPK implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
+	/*Referencia p o pedido e o produto, onde ela ta no meio de campo. O pedido e produto q identifica o itempedido*/
 	@ManyToOne
 	@JoinColumn(name = "pedido_id")
 	private Pedido pedido;
@@ -68,3 +68,4 @@ public class ItemPedidoPK implements Serializable {
 
 
 }
+/*hashcode e equals tem que ser com base nos 2 atributos p ver se um item é diferente*/
