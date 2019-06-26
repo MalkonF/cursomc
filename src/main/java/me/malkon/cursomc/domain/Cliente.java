@@ -8,6 +8,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,6 +29,15 @@ public class Cliente implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
+	/*
+	 * Garante que o campo email vai ser único no bd. N pode ter 2 email iguais p
+	 * clientes diferentes. Implementando somente essa anotação a exceção n vai ser
+	 * personalizada. Para manter a validação e n só por um aspecto de integridade
+	 * do banco de dados, podemos colocar um teste na classe de anotação
+	 * personalizada ClienteInsertValidation
+	 * 
+	 */
+	@Column(unique = true)
 	private String email;
 	private String cpfOuCnpj;
 	/*
