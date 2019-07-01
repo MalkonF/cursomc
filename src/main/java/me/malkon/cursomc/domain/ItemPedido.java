@@ -48,10 +48,14 @@ public class ItemPedido implements Serializable {
 		this.quantidade = quantidade;
 		this.preco = preco;
 	}
+	//como método começa com get vai ser serializado com JSON e será mostrado no endpoint
+	public double getSubTotal() {
+		return (preco - desconto) * quantidade;
+	}
 
 	/*
-	 * Se deixar sem @JsonIgnore, vai ser serializado os pedidos associados aos produtos.
-	 * Tudo q começa com get é serializado.
+	 * Se deixar sem @JsonIgnore, vai ser serializado os pedidos associados aos
+	 * produtos. Tudo q começa com get é serializado.
 	 */
 	@JsonIgnore
 	public Pedido getPedido() {
