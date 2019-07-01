@@ -5,11 +5,15 @@ import java.util.Date;
 import javax.persistence.Entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import me.malkon.cursomc.domain.enums.EstadoPagamento;
 
-/*Aqui n tem ch primaria, ela é herdada da superclasse*/
+/*Aqui n tem ch primaria, ela é herdada da superclasse
+ * 
+ * Qual é a palavra que vai identificar a classe no campo adicional?*/
 @Entity
+@JsonTypeName("pagamentoComBoleto")
 public class PagamentoComBoleto extends Pagamento {
 
 	private static final long serialVersionUID = 1L;

@@ -11,6 +11,7 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import me.malkon.cursomc.domain.enums.EstadoPagamento;
 
@@ -24,12 +25,18 @@ import me.malkon.cursomc.domain.enums.EstadoPagamento;
  * pesquisar os pagamentos vai ter que fazer os joins(junção) das
  * tabelas. Qnd tem muito atributo na subclasse é bom colocar tabelas
  * independentes se tem pouco atributos a única tabela é mais viável.
+ 
+ @Inheritance-n vai conseguir instanciar objeto com pagamento, so com suas subclasses
+
+ 
+ * @JsonTypeInfo - Instanciando a partir de dados JSON. Na requisição, o JSON terá um campo @type que indicará
+ *  qual classe vai ser instanciada para aquele pedido, pq a classe pagamento é abstrata e só poderá ser 
+ *  instanciado suas subclasses.
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Pagamento implements Serializable {// n vai conseguir instanciar objeto com pagamento, so com suas
-															// subclasses
-
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
+public abstract class Pagamento implements Serializable {
 	private static final long serialVersionUID = 1L;
 	/*
 	 * aqui não especifica a estratégia de geração de id pq usamos @MapsId abaixo,
