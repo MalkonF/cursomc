@@ -37,8 +37,8 @@ public class PedidoServices {
 	private ClienteServices clienteService;
 
 	@Autowired
-	private EmailServices emailService;//está interface será instanciada como MockMailServices em TestConfig
-	
+	private EmailServices emailService;// está interface será instanciada como MockMailServices em TestConfig
+
 	public Pedido find(Integer id) {
 
 		Optional<Pedido> obj = repo.findById(id);
@@ -46,7 +46,7 @@ public class PedidoServices {
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Pedido.class.getName()));
 
 	}
-	
+
 	public Pedido insert(Pedido obj) {
 		obj.setId(null);
 		obj.setInstante(new Date());// registra o pedido com a hora,data atual
@@ -66,7 +66,7 @@ public class PedidoServices {
 			ip.setPedido(obj);
 		}
 		itemPedidoRepository.saveAll(obj.getItens());// repository é capaz de salvar listas
-		emailService.sendOrderConfirmationEmail(obj);
+		emailService.sendOrderConfirmationHtmlEmail(obj);
 		return obj;
 	}
 }
