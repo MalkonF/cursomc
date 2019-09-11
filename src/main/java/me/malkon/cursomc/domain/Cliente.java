@@ -46,6 +46,9 @@ public class Cliente implements Serializable {
 	 */
 	private Integer tipo;
 
+	@JsonIgnore
+	private String senha;
+
 	/*
 	 * @JsonManagedReference cli serializa vários endereços, mas end n podem
 	 * serializar mais de 1 cli. Na classe endereço fica o @JsonBackReference
@@ -82,7 +85,7 @@ public class Cliente implements Serializable {
 
 	}
 
-	public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo) {
+	public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo, String senha) {
 		super();
 
 		this.id = id;
@@ -90,6 +93,7 @@ public class Cliente implements Serializable {
 		this.email = email;
 		this.cpfOuCnpj = cpfOuCnpj;
 		this.tipo = (tipo == null) ? null : tipo.getCod();
+		this.senha = senha;
 	}
 
 	public Integer getId() {
@@ -130,6 +134,14 @@ public class Cliente implements Serializable {
 
 	public void setTipo(TipoCliente tipo) {
 		this.tipo = tipo.getCod();
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 	public List<Endereco> getEnderecos() {
