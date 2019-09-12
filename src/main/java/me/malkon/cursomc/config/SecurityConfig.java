@@ -19,6 +19,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import me.malkon.cursomc.security.JWTAuthenticationFilter;
+import me.malkon.cursomc.security.JWTAuthorizationFilter;
 import me.malkon.cursomc.security.JWTUtil;
 
 /*Classe vai definir o que é bloqueado ou liberado por padrão*/
@@ -56,6 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(PUBLIC_MATCHERS).permitAll().anyRequest().authenticated();
 		// registra o filtro de autenticação
 		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
+		http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		// acima diz que nunca vai ser criada uma sessão http com usuário
 	}
