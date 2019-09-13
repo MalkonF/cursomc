@@ -15,11 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 import me.malkon.cursomc.domain.Cidade;
 import me.malkon.cursomc.domain.Cliente;
 import me.malkon.cursomc.domain.Endereco;
+import me.malkon.cursomc.domain.enums.Perfil;
 import me.malkon.cursomc.domain.enums.TipoCliente;
 import me.malkon.cursomc.dto.ClienteDTO;
 import me.malkon.cursomc.dto.ClienteNewDTO;
 import me.malkon.cursomc.repositories.ClienteRepository;
 import me.malkon.cursomc.repositories.EnderecoRepository;
+import me.malkon.cursomc.resources.exception.AuthorizationException;
+import me.malkon.cursomc.security.UserSS;
 import me.malkon.cursomc.services.exceptions.DataIntegrityException;
 import me.malkon.cursomc.services.exceptions.ObjectNotFoundException;
 
@@ -31,11 +34,16 @@ public class ClienteServices {
 
 	@Autowired
 	private EnderecoRepository enderecoRepository;
-	
+
 	@Autowired
 	private BCryptPasswordEncoder pe;
 
 	public Cliente find(Integer id) {
+
+		UserSS user = UserService.authenticated(); // retorna user logado
+		if (user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado");
+		} // hasRole verificar se o usuário tem o perfil de admin
 
 		Optional<Cliente> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
