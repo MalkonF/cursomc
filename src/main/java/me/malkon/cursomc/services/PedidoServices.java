@@ -14,6 +14,7 @@ import me.malkon.cursomc.domain.ItemPedido;
 import me.malkon.cursomc.domain.PagamentoComBoleto;
 import me.malkon.cursomc.domain.Pedido;
 import me.malkon.cursomc.domain.enums.EstadoPagamento;
+import me.malkon.cursomc.domain.enums.Perfil;
 import me.malkon.cursomc.repositories.ItemPedidoRepository;
 import me.malkon.cursomc.repositories.PagamentoRepository;
 import me.malkon.cursomc.repositories.PedidoRepository;
@@ -47,7 +48,14 @@ public class PedidoServices {
 
 	public Pedido find(Integer id) {
 
+		UserSS user = UserService.authenticated();
+
 		Optional<Pedido> obj = repo.findById(id);
+		if (user == null || !user.hasRole(Perfil.ADMIN) && !obj.get().getCliente().getId().equals(user.getId())) {
+
+			throw new AuthorizationException("Acesso Negado!");
+		}
+
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Pedido.class.getName()));
 
