@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -69,6 +70,7 @@ public class CategoriaResource {
 	 * JSON vai ser convertido p objeto java automaticamente
 	 */
 	@RequestMapping(method = RequestMethod.POST) // método vai ser mapeado no endpoint categorias tipo POST
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO objDto) {
 
 		Categoria obj = service.fromDTO(objDto);
@@ -83,6 +85,7 @@ public class CategoriaResource {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	public ResponseEntity<Void> update(@Valid @RequestBody CategoriaDTO objDto, @PathVariable Integer id) {
 		Categoria obj = service.fromDTO(objDto);
 		obj.setId(id);// garante que a categoria atualizada vai ser a que vc passou na url
@@ -91,6 +94,7 @@ public class CategoriaResource {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
