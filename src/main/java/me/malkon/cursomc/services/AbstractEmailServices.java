@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import me.malkon.cursomc.domain.Cliente;
 import me.malkon.cursomc.domain.Pedido;
 
 @Service
@@ -43,7 +44,23 @@ public abstract class AbstractEmailServices implements EmailServices {
 		sm.setSentDate(new Date(System.currentTimeMillis()));
 		sm.setText(obj.toString());// corpo do email
 		return sm;
+	}
 
+	// prepara o e-mail com assunto, remetente etc
+	@Override
+	public void sendNewPasswordEmail(Cliente cliente, String newPass) {
+		SimpleMailMessage sm = prepareNewPasswordEmail(cliente, newPass);
+		sendEmail(sm);
+	}
+
+	protected SimpleMailMessage prepareNewPasswordEmail(Cliente cliente, String newPass) {
+		SimpleMailMessage sm = new SimpleMailMessage();
+		sm.setTo(cliente.getEmail());
+		sm.setFrom(sender);
+		sm.setSubject("Solicitação de nova senha");
+		sm.setSentDate(new Date(System.currentTimeMillis()));
+		sm.setText("Nova senha: " + newPass);// conteúdo do email
+		return sm;
 	}
 
 	/* Aqui o template será preechido com as info do backend */
