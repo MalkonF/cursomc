@@ -37,23 +37,23 @@ public class CategoriaServices {
 	}
 
 	/*
-	 * se for novo obj tem que ter o id nulo, se já tiver id, o método save vai ser
-	 * considerado como atualização
+	 * se for novo obj tem que ter o id nulo, se já tiver id, o método save vai
+	 * considerar como atualização
 	 */
 	public Categoria insert(Categoria obj) {
 		obj.setId(null);
-		return repo.save(obj);
+		return repo.save(obj);// retorna o objeto
 	}
 
 	/*
 	 * vai buscar obj no banco, se n existir lança a exceção q é implemenetada no
 	 * proprio metodo find
 	 * 
-	 * save serve tanto p inserir qt p atualizar. O q importa é o id ta valendonulo,
-	 * ele insere, qnd n é nulo ele atualiza
+	 * save serve tanto p inserir qt p atualizar. O q importa é se o id ta valendo
+	 * nulo, ele insere, qnd n é nulo ele atualiza
 	 */
 	public Categoria update(Categoria obj) {
-		Categoria newObj = find(obj.getId());
+		Categoria newObj = find(obj.getId());// find busca o obj no banco, caso este obj n existe vai lancar excecao
 		updateData(newObj, obj);
 		return repo.save(newObj);
 	}
@@ -65,9 +65,12 @@ public class CategoriaServices {
 		} catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("Não é possível excluir uma categoria que possui produtos");
 		} /*
-			 * se excluir uma categoria que tem produtos vai lançar essa exceção
-			 * personalizada. Aí lá na classe do controller vai pegar a exceção pelo mesmo
-			 * mecanismo da exceção da categoria
+			 * A categoria de um produto n pode ser excluída por causa da integridade
+			 * referencial, um produto n pode ficar sem registro de categoria no bd, se
+			 * acontecer isso uma exceção personalizada será lancada. Qnd tiver que excluir
+			 * uma categoria do produto, ou vc tb apaga os produtos ou impede a delecao. Aí
+			 * lá na classe do controller vai pegar a exceção pelo mesmo mecanismo da
+			 * exceção da categoria
 			 */
 
 	}
@@ -77,12 +80,18 @@ public class CategoriaServices {
 	}
 
 	/*
-	 * recurso de paginação. direction tem que ser convertido de string p Direction
-	 * Classe Page encapsula informações da paginação
+	 * recurso de paginação - paginacao e feita p n carregar todos os dados de uma
+	 * vez e consumir muito recurso de processamento.
+	 * 
+	 * Direction tem que ser convertido de string p Direction. Signfica ascendente
+	 * ou descendente
+	 * 
+	 * Classe Page encapsula informações da paginação. page e qual pagina? pag um,
+	 * dois..orderBy ordena por um atributo
 	 */
 	public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
-		return repo.findAll(pageRequest);// retorna a página
+		return repo.findAll(pageRequest);// retorna a página. Método foi sobrecarregado
 	}
 
 	// converte CategoriaDTO para Categoria

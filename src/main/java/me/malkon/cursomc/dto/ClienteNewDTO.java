@@ -9,7 +9,7 @@ import org.hibernate.validator.constraints.Length;
 
 import me.malkon.cursomc.services.validation.ClienteInsert;
 
-/*Feito para cadastra o cliente tudo numa vez só com esses dados.
+/*Feito para cadastra o cliente tudo numa vez só com esses dados.P o método POST do clienteResource
  * 
  * @ClientInsert é uma anotação customizada por isso tem que ser colocada acima da classe*/
 @ClienteInsert

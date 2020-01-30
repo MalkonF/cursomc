@@ -89,3 +89,8 @@ public class Cidade implements Serializable {
 	}
 
 }
+/*
+ * le se o diagrama assim: um cliente pode ter varios pedidos e n tem q ter
+ * pedidos obrigatorios, ou seja, ao menos 1. Um pedido tem um cliente e é
+ * obrigatorio ter ao menos 1 cliente
+ */

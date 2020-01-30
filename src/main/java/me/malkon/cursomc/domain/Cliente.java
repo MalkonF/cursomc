@@ -58,7 +58,11 @@ public class Cliente implements Serializable {
 	 * dizendo que ele n pode serializar os clientes
 	 * 
 	 * cascadeType.All toda operação q for feita no cliente vai ser refletida no
-	 * endereço, se excluir cliente os endereços anexados vao ser excluídos.
+	 * endereço, se excluir cliente os endereços anexados vao ser excluídos. Qd tem
+	 * relacionamento um p muitos, na delecao de algo, vc vai ter q decidir se barra
+	 * a exclusao se um depender do outro, ex pedidos feitos depende de clientes ou
+	 * se apaga a dependencia, ex endereco depende de cliente, qnd for excluir
+	 * cliente apague endereco
 	 * 
 	 * List é uma interface e n pode ser instanciada, por isso tem que achar uma
 	 * classe que implementa ela(ArrayList)

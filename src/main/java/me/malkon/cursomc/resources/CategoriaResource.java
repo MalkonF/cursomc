@@ -45,7 +45,8 @@ public class CategoriaResource {
 	 * http adequada, no caso 404. P isso foi criado a classe
 	 * ResourceExceptionHandler
 	 */
-
+	// ReponseEntity retorna uma categoria, se ela fosse retornar vários tipos de
+	// objetos diferentes poderia colocar o <?>
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Categoria> find(@PathVariable Integer id) {
 
@@ -62,9 +63,10 @@ public class CategoriaResource {
 	 * ResponseEntity recebe um retorno de resposta http e void diz que o corpo da
 	 * resposta é vazio
 	 * 
-	 * @Valid valida a informação, se o nome tiver vazio, por exemplo, vai retornar
-	 * um bad request. O @Valid ele valida as informações a partir do cliente, no
-	 * sentido Cliente - Controller - Service...
+	 * @Valid valida a informação(atributos da classe) que tem as anotacoes,
+	 * ex: @notEmpty, se o nome tiver vazio, por exemplo, vai retornar um bad
+	 * request. O @Valid ele valida as informações a partir do cliente, no sentido
+	 * Cliente - Controller - Service...
 	 * 
 	 * @RequestBody obj vai ser construido a partir dos dados JSON q vc enviar. O
 	 * JSON vai ser convertido p objeto java automaticamente
@@ -78,14 +80,16 @@ public class CategoriaResource {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri)
 				.build(); /*
-							 * Pega o id que o banco gerou e fornece ele p gerar a URI do novo objeto.
-							 * fromCurrentRequest() pega a url que usamos p inserir /categorias/ retorna
-							 * http status created - 201 junto com a uri do novo recurso criado
+							 * buildAndExpand pega o id que o banco gerou c obj.getId e fornece ele p path e
+							 * fromCurrentRequest vai emendar com o endereco q foi requerido mais id e gerar
+							 * a URI do novo objeto. fromCurrentRequest() pega a url que usamos p inserir
+							 * /categorias/ e created() retorna http status created - 201 junto com a uri do
+							 * novo recurso criado
 							 */
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	@PreAuthorize("hasAnyRole('ADMIN')")
+	@PreAuthorize("hasAnyRole('ADMIN')") // @PathVariable pega o parametro da URL {id} e atribui a var id
 	public ResponseEntity<Void> update(@Valid @RequestBody CategoriaDTO objDto, @PathVariable Integer id) {
 		Categoria obj = service.fromDTO(objDto);
 		obj.setId(id);// garante que a categoria atualizada vai ser a que vc passou na url
@@ -93,6 +97,7 @@ public class CategoriaResource {
 		return ResponseEntity.noContent().build();// nocontent retorna conteúdo vazio
 	}
 
+	// ResponseEntity<Void> é void pq ele retorna uma reposta com corpo vazio
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
@@ -106,6 +111,9 @@ public class CategoriaResource {
 	 * as categorias tem que usar DTO(Data Transfer Object) objeto de tansf de
 	 * dados. Ele é um obj que vai ter somente os dados que vc quer q alguma
 	 * operação. Por isso foi criado o pct DTO
+	 * 
+	 * Esse endpoint sera acessado somente por /categorias n foi colocado um value p
+	 * ele
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<CategoriaDTO>> findAll() {
@@ -116,10 +124,10 @@ public class CategoriaResource {
 		 * objeto DTO correspondente. Aqui qnd ele passa obj para CategoriaDTO, o obj
 		 * passa so o nome e a id para o dto p simplificar informações. stream vai
 		 * percorrer a lista, map vai executar uma operação p cada elemento da lista.
-		 * cada elemento da lista é obj e p cada elemento obj na lista vou usar o
-		 * operador -> p criar função anonima q recebe objeto e instancia CategoriaDTO
-		 * com obj como argumento. Feito isso tem que voltar o stream de objeto p o tipo
-		 * lista. Collectors.tolist()
+		 * cada elemento da lista é representado por obj e p cada elemento obj na lista
+		 * vou usar o operador -> p criar função anonima q recebe objeto e instancia
+		 * CategoriaDTO com obj como argumento. Feito isso tem que voltar o stream de
+		 * objeto p o tipo lista. Collectors.tolist()
 		 */
 		return ResponseEntity.ok().body(listDto);
 

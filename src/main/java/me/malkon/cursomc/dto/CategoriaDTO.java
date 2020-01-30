@@ -16,6 +16,14 @@ public class CategoriaDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
+	/*
+	 * validacao é recomendado fazer no frontend p evitar o envio de dados
+	 * desnecessários p o backend. Se for fazer no backend é recomendavel fazer
+	 * validacao basica(p n ficar muito verboso) na camada resources e validações q
+	 * exigem mais codigo fazer um pct a parte na camada de serviços. Qnd, por
+	 * exemplo, vc for fazer um POST de um objDTO, la no resources será interceptado
+	 * e validado antes de enviar
+	 */
 	@NotEmpty(message = "Preenchimento obrigatório") // lança a msg se tiver vazio
 	@Length(min = 5, max = 80, message = "O tamanho deve ser entre 5 e 80 caracteres")
 	private String nome;

@@ -55,7 +55,8 @@ public class ClienteServices {
 	public Cliente insert(Cliente obj) {
 		obj.setId(null);
 		obj = repo.save(obj);
-		enderecoRepository.saveAll(obj.getEnderecos());
+		enderecoRepository.saveAll(obj.getEnderecos());// tem que salvar o cliente e o endereco ja q os demais dados
+														// estao contidos nessas duas entidades
 		return obj;
 	}
 

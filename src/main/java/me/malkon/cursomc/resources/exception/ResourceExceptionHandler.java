@@ -19,6 +19,8 @@ public class ResourceExceptionHandler {
 	 * Aqui o método vai receber exceção que já estourou e os detalhes da requisição
 	 * e vai retornar uma resposta http com as informações personalizadas do erro.
 	 * System.currentTimeMillis - horario sistema. e mensagem exceção
+	 * 
+	 * Esse tipo de classe ajuda a n poluir o resources com try e catch
 	 */
 
 	@ExceptionHandler(ObjectNotFoundException.class)
@@ -38,7 +40,8 @@ public class ResourceExceptionHandler {
 
 	}
 
-	// Qd a validação do campo falha esta exceção abaixo é acionada
+	// Qd a validação do campo falha esta exceção abaixo é acionada automaticamente
+	// pelo spring
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<StandardError> validation(MethodArgumentNotValidException e, HttpServletRequest request) {
 
