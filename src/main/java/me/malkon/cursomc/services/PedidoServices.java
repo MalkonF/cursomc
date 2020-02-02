@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import me.malkon.cursomc.domain.Cliente;
 import me.malkon.cursomc.domain.ItemPedido;
@@ -61,18 +62,30 @@ public class PedidoServices {
 
 	}
 
+	/*
+	 * Se ficar na duvida o que salvar na operacao insert so olhar no diagrama de
+	 * classes, devera ser salva toda classe independente envolvida na transacao
+	 * ex(inserir um pedido envolve as classes Pedido, itemPedido, Pagamento e
+	 * produto, as 3 terao que ser salvas, produto n, pq já foi instanciada. Isso e
+	 * necessario pq a cada registro no bd todos os campos vao ter q ter
+	 * correspondencias, ex: a cada pedido tem q ter um cliente, um pag
+	 */
+	@Transactional
 	public Pedido insert(Pedido obj) {
-		obj.setId(null);
+		obj.setId(null);// garante q esta inserindo um novo pedido
 		obj.setInstante(new Date());// registra o pedido com a hora,data atual
 		obj.setCliente(clienteService.find(obj.getCliente().getId()));
 		obj.getPagamento().setEstado(EstadoPagamento.PENDENTE);
 		obj.getPagamento().setPedido(obj);
-		if (obj.getPagamento() instanceof PagamentoComBoleto) {
+		if (obj.getPagamento() instanceof PagamentoComBoleto) {// simula calculo dt vencimento boleto
 			PagamentoComBoleto pagto = (PagamentoComBoleto) obj.getPagamento();
 			boletoService.preencherPagamentoComBoleto(pagto, obj.getInstante());
 		}
 		obj = repo.save(obj);
-		pagamentoRepository.save(obj.getPagamento());
+		pagamentoRepository.save(obj.getPagamento());/*
+														 * e salvo o pagamento pq optamos por essa forma, outra forma
+														 * seria usar o setPagamento da propria classe Pedido
+														 */
 		for (ItemPedido ip : obj.getItens()) {
 			ip.setDesconto(0.0);
 			ip.setProduto(produtoService.find(ip.getProduto().getId()));

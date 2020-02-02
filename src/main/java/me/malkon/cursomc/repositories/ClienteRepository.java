@@ -12,7 +12,7 @@ import me.malkon.cursomc.domain.Cliente;
 public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 
 	/*
-	 * A transação n é envolvida com uma transação de bd. fica| mais rápida e
+	 * A transação n é envolvida com uma transação de bd. fica mais rápida e
 	 * diminui o locking no gerenciamento de transações do bd
 	 */
 	@Transactional(readOnly = true)

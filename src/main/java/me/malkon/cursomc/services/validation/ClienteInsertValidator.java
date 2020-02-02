@@ -15,21 +15,24 @@ import me.malkon.cursomc.repositories.ClienteRepository;
 import me.malkon.cursomc.resources.exception.FieldMessage;
 import me.malkon.cursomc.services.validation.utils.BR;
 
-/*Nome da anotação(ClienteInsert) e o tipo da classe que vai aceitar a anotação(CLienteNewDTO). Implementamos 
- * ConstraintValidator para sobrescrever o método isValid e personalizarmos e implementarmos nossa validação.*/
+/*No implements nome da anotação(ClienteInsert) e o tipo da classe que vai ser usada a anotação(CLienteNewDTO). Implementamos 
+ * ConstraintValidator para sobrescrever o método isValid e personalizarmos e implementarmos nossa validação.
+ * 
+ * Toda notacao customizada precisa da classe da anotacao(ClienteInsert) e outra(ClienteInsertValidator) p ser o 
+ * validator da anotacao*/
 public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert, ClienteNewDTO> {
 
 	@Autowired
 	private ClienteRepository repo;
 
-	@Override
+	@Override // aqui coloca-se algo p iniciar antes de rodar o metodo isValid
 	public void initialize(ClienteInsert ann) {
 	}
 
 	/*
 	 * Esse método tem que retornar true se o objeto for válido e false se n for
 	 * válido. Se retornar false lá no resources, no metodo post, tem a
-	 * anotação @Valid, ela vai validar se ta ok ou não
+	 * anotação @Valid, ela q vai validar se ta ok ou não
 	 */
 	@Override
 	public boolean isValid(ClienteNewDTO objDto, ConstraintValidatorContext context) {
@@ -48,8 +51,10 @@ public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert
 
 		/*
 		 * percorre os erros na lista FieldMessage e add os erros dela(erros
-		 * personalizados) na lista de erros do framework. Essa lista de erros do
-		 * framework é usada na classe ResourceExceptionHandler
+		 * personalizados) na lista de erros do
+		 * framework(disableDefaultConstraintViolation()). Essa lista de erros do
+		 * framework é usada na classe ResourceExceptionHandler q detectada a excecao
+		 * qnd ela ocorre
 		 */
 
 		for (FieldMessage e : list) {

@@ -29,9 +29,10 @@ import me.malkon.cursomc.domain.enums.EstadoPagamento;
  @Inheritance-n vai conseguir instanciar objeto com pagamento, so com suas subclasses
 
  
- * @JsonTypeInfo - Instanciando a partir de dados JSON. Na requisição, o JSON terá um campo @type que indicará
- *  qual classe vai ser instanciada para aquele pedido, pq a classe pagamento é abstrata e só poderá ser 
- *  instanciado suas subclasses.
+ * @JsonTypeInfo - Permite instanciar subclasses a partir de dados JSON. Na requisição, 
+ * o JSON terá um campo @type que indicará
+ * qual classe vai ser instanciada para aquele pedido, pq a classe pagamento é abstrata e só poderá ser 
+ * instanciado suas subclasses.
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)

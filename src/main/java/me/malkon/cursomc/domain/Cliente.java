@@ -33,11 +33,11 @@ public class Cliente implements Serializable {
 	private Integer id;
 	private String nome;
 	/*
-	 * Garante que o campo email vai ser único no bd. N pode ter 2 email iguais p
-	 * clientes diferentes. Implementando somente essa anotação a exceção n vai ser
-	 * personalizada. Para manter a validação e n só por um aspecto de integridade
-	 * do banco de dados, podemos colocar um teste na classe de anotação
-	 * personalizada ClienteInsertValidation
+	 * Garante que o campo email vai ser único no bd. N pode ter 2 email iguais msm
+	 * p clientes diferentes. Implementando somente essa anotação a exceção n vai
+	 * ser personalizada, vai ser excecao do framework. Unique mantem integridade do
+	 * bd, mas podemos fazer notacao personalizada p alem da integridade, fazer tb
+	 * validacao se ja tem o e-mail(isso é implementado em ClientInsertValidator).
 	 * 
 	 */
 	@Column(unique = true)

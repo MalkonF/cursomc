@@ -11,7 +11,8 @@ import me.malkon.cursomc.services.validation.ClienteInsert;
 
 /*Feito para cadastra o cliente tudo numa vez só com esses dados.P o método POST do clienteResource
  * 
- * @ClientInsert é uma anotação customizada por isso tem que ser colocada acima da classe*/
+ * @ClientInsert é uma anotação customizada por isso tem que ser colocada acima da classe.
+ * Usa-se Client Insert qnd for fazer post de um cliente p verificar se cpf é valido e email existe*/
 @ClienteInsert
 public class ClienteNewDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -23,9 +24,10 @@ public class ClienteNewDTO implements Serializable {
 	@Email(message = "Email inválido")
 	private String email;
 	/*
-	 * Se o campo fosse somente cpf ou cnpj o spring tem a anotação @CPF ou @CNPJ p
-	 * validar. Mas esse campo aqui depende de outro campo(tipo), por isso vamos
-	 * criar uma validação customizada.
+	 * Se fosse 2 campos separados(cpf e cnpj) o spring tem a anotação @CPF/@CNPJ p
+	 * validar. Mas esse campo aqui depende de outro campo(Integer tipo), por isso
+	 * vamos criar uma validação customizada, p validar o cpf ou cnpj dependendo do
+	 * tipo do cliente.
 	 */
 	@NotEmpty(message = "Preenchimento obrigatório")
 	private String cpfOuCnpj;

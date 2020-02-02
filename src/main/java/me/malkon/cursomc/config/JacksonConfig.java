@@ -10,7 +10,7 @@ import me.malkon.cursomc.domain.PagamentoComBoleto;
 import me.malkon.cursomc.domain.PagamentoComCartao;
 
 /*
-classe de configuração - tem métodos que vai estar disponível no início da execução da aplicação. Nesse caso,
+classe de configuração - é feito p ter métodos que vai estar disponível no início da execução da aplicação. Nesse caso,
 o código abaixo vai registrar as duas classes antes do início da aplicação*/
 @Configuration
 public class JacksonConfig {

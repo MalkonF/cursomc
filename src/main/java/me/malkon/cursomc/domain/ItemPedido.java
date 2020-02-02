@@ -67,6 +67,16 @@ public class ItemPedido implements Serializable {
 		return id.getPedido();
 	}
 
+	/*
+	 * setPedido e setProduto sao necessarios pq na hora de gravar um pedido, vai //
+	 * ser necessario instanciar o itemPedido ai vc tem que fzr as associacoes c //
+	 * pedido e produto p q ele possa ser salvo no bd
+	 * 
+	 * Na classe itemPedido ja tinha um construtor p iniciar produtos e pedidos, mas
+	 * o framework, qnd recebe a requisicao web ele utiliza os metodos set das
+	 * classes p iniciar os atributos e instancia-la
+	 */
+
 	public void setPedido(Pedido pedido) {
 		id.setPedido(pedido);
 	}

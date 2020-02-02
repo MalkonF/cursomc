@@ -19,10 +19,13 @@ public class DevConfig {
 	@Autowired
 	private DBService dbService;
 
-	@Value("${spring.jpa.hibernate.ddl-auto}")
+	@Value("${spring.jpa.hibernate.ddl-auto}") // pega o valor da chave no properties
 	private String strategy;
 
-	@Bean
+	@Bean /*
+			 * Só instancia os dados se o valor da chave no application.properties for
+			 * create
+			 */
 	public boolean instantiateDatabase() throws ParseException {
 
 		if (!"create".equals(strategy))
@@ -33,7 +36,7 @@ public class DevConfig {
 		return true;
 
 	}
-	
+
 	@Bean
 	public EmailServices emailService() {
 		return new SmtpEmailService();

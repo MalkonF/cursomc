@@ -34,6 +34,11 @@ public class PedidoResource {
 
 	}
 
+	/*
+	 * As info no body do POST vao vai ter @type
+	 * "pagamentoComCartao ou pagamentoComBoleto" p indicar ao Jackson(pct implementa
+	 * json) q é pra instanciar uma das 2 classes
+	 */
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@Valid @RequestBody Pedido obj) {
 		obj = service.insert(obj);
