@@ -27,10 +27,11 @@ public class TestConfig {
 		return true;
 	}
 
-	@Bean // metodo vai estar disponivel como componente no sistema. Se em outra classe vc
-			// faz uma injeção de dependencia
+	// metodo vai estar disponivel como componente no sistema. Se em outra classe vc
+	// faz uma injeção de dependencia
 	// o spring vai procurar por um componente que pode ser um Bean e retorna uma
 	// nova instancia no MockMailService
+	@Bean
 	public EmailServices emailService() {
 
 		return new MockEmailServices();

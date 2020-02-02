@@ -17,7 +17,6 @@ import org.thymeleaf.context.Context;
 import me.malkon.cursomc.domain.Cliente;
 import me.malkon.cursomc.domain.Pedido;
 
-@Service
 public abstract class AbstractEmailServices implements EmailServices {
 
 	@Value("${default.sender}") // pega o valor de application.properties
