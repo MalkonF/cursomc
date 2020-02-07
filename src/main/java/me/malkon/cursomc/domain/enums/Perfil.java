@@ -19,7 +19,7 @@ public enum Perfil {
 	public String getDescricao() {
 		return descricao;
 	}
-
+	// recebe inteiro retorna enum
 	public static Perfil toEnum(Integer cod) {
 
 		if (cod == null) {

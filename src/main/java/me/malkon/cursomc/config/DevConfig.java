@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import me.malkon.cursomc.services.DBService;
-import me.malkon.cursomc.services.EmailServices;
+import me.malkon.cursomc.services.EmailService;
 import me.malkon.cursomc.services.SmtpEmailService;
 
 @Configuration
@@ -22,10 +22,11 @@ public class DevConfig {
 	@Value("${spring.jpa.hibernate.ddl-auto}") // pega o valor da chave no properties
 	private String strategy;
 
-	@Bean /*
+	/*
 			 * Só instancia os dados se o valor da chave no application.properties for
 			 * create
 			 */
+	@Bean 
 	public boolean instantiateDatabase() throws ParseException {
 
 		if (!"create".equals(strategy))
@@ -38,7 +39,7 @@ public class DevConfig {
 	}
 
 	@Bean
-	public EmailServices emailService() {
+	public EmailService emailService() {
 		return new SmtpEmailService();
 	}
 

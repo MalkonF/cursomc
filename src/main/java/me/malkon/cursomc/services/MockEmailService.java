@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 
 //classe vai somente simular envio de email através do Logger
 @Service
-public class MockEmailServices extends AbstractEmailServices {
+public class MockEmailService extends AbstractEmailService {
 
-	private static final Logger LOG = LoggerFactory.getLogger(MockEmailServices.class);
+	private static final Logger LOG = LoggerFactory.getLogger(MockEmailService.class);
 
 	@Override /*
 				 * classe abstrata implementa 1 dos metodos da interface. Essa classe extende a

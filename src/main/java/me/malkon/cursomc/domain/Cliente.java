@@ -48,7 +48,7 @@ public class Cliente implements Serializable {
 	 * externo a classe vai expor um TipoCliente
 	 */
 	private Integer tipo;
-
+	// N vai aparecer campo senha nos dados JSON qnd der get, mesmo q criptografada
 	@JsonIgnore
 	private String senha;
 

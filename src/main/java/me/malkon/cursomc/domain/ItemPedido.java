@@ -146,7 +146,7 @@ public class ItemPedido implements Serializable {
 			return false;
 		return true;
 	}
-
+	// vai ser chamado no toString de pedidos
 	@Override
 	public String toString() {
 		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));

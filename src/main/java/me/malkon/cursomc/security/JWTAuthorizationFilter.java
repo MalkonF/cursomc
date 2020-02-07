@@ -14,8 +14,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
-/*Depois de fazer a requisição POST com login e senha, se estiverem corretos, ele retorna 200 ok, e no cabeçalho vem o token.
-Depois vc define o endpoint que quer acessar, no cabeçalho da requisição vc acrescenta o campo Authorization c valor do token.*/
+/*
+ * *Depois de fazer a requisição POST com login e senha, se estiverem corretos, ele retorna 200 ok, e no cabeçalho vem o token.
+Depois vc define o endpoint que quer acessar, no cabeçalho da requisição vc acrescenta o campo Authorization c valor do token..
+Essa classe vai justamente verificar se o token q ele passou é o correto*/
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
 	private JWTUtil jwtUtil;
@@ -37,7 +39,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 		String header = request.getHeader("Authorization");
 		if (header != null && header.startsWith("Bearer ")) {
 			// header.sub..é o token
-			UsernamePasswordAuthenticationToken auth = getAuthentication(header.substring(7));
+			UsernamePasswordAuthenticationToken auth = getAuthentication(header.substring(7));// é o token
 			if (auth != null) {
 				// libera o acesso ao filtro
 				SecurityContextHolder.getContext().setAuthentication(auth);
@@ -48,10 +50,12 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
 	private UsernamePasswordAuthenticationToken getAuthentication(String token) {
 		if (jwtUtil.tokenValido(token)) {
-			String username = jwtUtil.getUsername(token);
+			String username = jwtUtil.getUsername(token); // pega o username dentro do token
 			// busca no bd o usuário
+
 			UserDetails user = userDetailsService.loadUserByUsername(username);
-			return new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+			return new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());// getAuthorities libera
+																								// de acordo c perfil
 		}
 		return null;
 	}

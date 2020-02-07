@@ -16,14 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import me.malkon.cursomc.domain.Pedido;
-import me.malkon.cursomc.services.PedidoServices;
+import me.malkon.cursomc.services.PedidoService;
 
 @RestController
 @RequestMapping(value = "/pedidos")
 public class PedidoResource {
 
 	@Autowired
-	private PedidoServices service;
+	private PedidoService service;
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Pedido> find(@PathVariable Integer id) {

@@ -17,7 +17,7 @@ import me.malkon.cursomc.services.exceptions.DataIntegrityException;
 import me.malkon.cursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
-public class CategoriaServices {
+public class CategoriaService {
 
 	@Autowired // automaticamente instanciada pelo Spring pelo mecanismo de i.d e i.c
 	private CategoriaRepository repo;

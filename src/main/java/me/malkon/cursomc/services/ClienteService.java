@@ -1,5 +1,6 @@
 package me.malkon.cursomc.services;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import me.malkon.cursomc.domain.Cidade;
 import me.malkon.cursomc.domain.Cliente;
@@ -27,23 +29,29 @@ import me.malkon.cursomc.services.exceptions.DataIntegrityException;
 import me.malkon.cursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
-public class ClienteServices {
+public class ClienteService {
 
 	@Autowired
 	private ClienteRepository repo;
 
 	@Autowired
 	private EnderecoRepository enderecoRepository;
-
+	// injetando o bean q foi criado em SecurityConfig
 	@Autowired
 	private BCryptPasswordEncoder pe;
+
+	@Autowired
+	private S3Service s3Service;
 
 	public Cliente find(Integer id) {
 
 		UserSS user = UserService.authenticated(); // retorna user logado
 		if (user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
 			throw new AuthorizationException("Acesso negado");
-		} // hasRole verificar se o usuário tem o perfil de admin
+		} /*
+			 * hasRole verificar se o usuário tem o perfil de admin e id.equals verifica se
+			 * o id q ta buscando n é igual ao user q ta logado
+			 */
 
 		Optional<Cliente> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
@@ -110,5 +118,11 @@ public class ClienteServices {
 	private void updateData(Cliente newObj, Cliente obj) {
 		newObj.setNome(obj.getNome());
 		newObj.setEmail(obj.getEmail());
+	}
+
+	// ele vai repassar a chamada p o s3 service. Foi feito aqui so p questao d
+	// organizar ja q quem vai mandar a foto é um cliente
+	public URI uploadProfilePicture(MultipartFile multipartFile) {
+		return s3Service.uploadFile(multipartFile);
 	}
 }
