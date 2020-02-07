@@ -8,8 +8,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import me.malkon.cursomc.services.DBService;
-import me.malkon.cursomc.services.EmailServices;
-import me.malkon.cursomc.services.MockEmailServices;
+import me.malkon.cursomc.services.EmailService;
+import me.malkon.cursomc.services.MockEmailService;
 
 /*Configuacoes especificas p o profile de test. Tds os beans so vao ser ativados
  * qnd o profile test tiver ativo no application.properties*/
@@ -27,14 +27,17 @@ public class TestConfig {
 		return true;
 	}
 
-	// metodo vai estar disponivel como componente no sistema. Se em outra classe vc
-	// faz uma injeção de dependencia
-	// o spring vai procurar por um componente que pode ser um Bean e retorna uma
-	// nova instancia no MockMailService
+	/*
+	 * @Bean significa que metodo vai estar disponivel como componente no sistema.
+	 * Se em outra classe vc faz uma injeção de dependencia o spring vai procurar
+	 * por um componente que pode ser um Bean e retorna uma nova instancia no
+	 * MockMailService. Aqui é necessario instanciar pq na classe Abstact vai usar a
+	 * implementacao de sendMail que MockEmail implementou.
+	 */
 	@Bean
-	public EmailServices emailService() {
+	public EmailService emailService() {
 
-		return new MockEmailServices();
+		return new MockEmailService();
 	}
 
 }

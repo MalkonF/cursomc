@@ -23,7 +23,7 @@ import me.malkon.cursomc.dto.CredenciaisDTO;
 /*
  * Quando a aplicação for solicitar a requisição de autenticação do login com user e senha
  * o filtro de autenticação vai interceptar e conferir se o usuário e senha estão corretos.
- * A classe que é estendida abaixo vai responder pelo endpoit /login(já é padrão do Spring)*/
+ * A classe que é estendida abaixo vai responder pelo endpoint /login(já é padrão do Spring)*/
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
 	private AuthenticationManager authenticationManager;
@@ -66,6 +66,10 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		res.addHeader("Authorization", "Bearer " + token);// o token vai ficar no cabeçalho
 	}
 
+	/*
+	 * Se a autenticacao falhar, retorna 401. Classe que personaliza o q vai retorna
+	 * caso autenticacao falhe
+	 */
 	private class JWTAuthenticationFailureHandler implements AuthenticationFailureHandler {
 
 		@Override

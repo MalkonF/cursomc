@@ -9,7 +9,7 @@ import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 
-public class SmtpEmailService extends AbstractEmailServices {
+public class SmtpEmailService extends AbstractEmailService {
 
 	@Autowired
 	private MailSender mailSender;// O Spring instancia mailSender com todos os dados que estão no
@@ -17,6 +17,7 @@ public class SmtpEmailService extends AbstractEmailServices {
 
 	@Autowired
 	private JavaMailSender javaMailSender;
+	
 	private static final Logger LOG = LoggerFactory.getLogger(SmtpEmailService.class);
 
 	@Override

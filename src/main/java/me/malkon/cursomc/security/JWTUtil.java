@@ -18,7 +18,7 @@ public class JWTUtil {
 	@Value("${jwt.expiration}")
 	private Long expiration;
 
-	// gera um token a partir de um usuário
+	// gera um token a partir de um usuário. Jwts.builder gera token
 	public String generateToken(String username) {
 		return Jwts.builder().setSubject(username).setExpiration(new Date(System.currentTimeMillis() + expiration))
 				.signWith(SignatureAlgorithm.HS512, secret.getBytes())// como vou assinar meu token e c qual algoritmo?
@@ -47,7 +47,8 @@ public class JWTUtil {
 		return null;
 	}
 
-	// para obter os claims a partir de um token
+	// para obter os claims a partir de um token. Se o tk for invalido vai dar uma
+	// exceção
 	private Claims getClaims(String token) {
 		try {
 			return Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(token).getBody();

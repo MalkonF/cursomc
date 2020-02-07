@@ -27,14 +27,14 @@ import me.malkon.cursomc.services.exceptions.DataIntegrityException;
 import me.malkon.cursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
-public class ClienteServices {
+public class ClienteService {
 
 	@Autowired
 	private ClienteRepository repo;
 
 	@Autowired
 	private EnderecoRepository enderecoRepository;
-
+	// injetando o bean q foi criado em SecurityConfig
 	@Autowired
 	private BCryptPasswordEncoder pe;
 
@@ -43,7 +43,10 @@ public class ClienteServices {
 		UserSS user = UserService.authenticated(); // retorna user logado
 		if (user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
 			throw new AuthorizationException("Acesso negado");
-		} // hasRole verificar se o usuário tem o perfil de admin
+		} /*
+			 * hasRole verificar se o usuário tem o perfil de admin e id.equals verifica se
+			 * o id q ta buscando n é igual ao user q ta logado
+			 */
 
 		Optional<Cliente> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(

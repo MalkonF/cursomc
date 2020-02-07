@@ -20,6 +20,7 @@ public enum Perfil {
 		return descricao;
 	}
 
+	// recebe inteiro retorna enum
 	public static Perfil toEnum(Integer cod) {
 
 		if (cod == null) {

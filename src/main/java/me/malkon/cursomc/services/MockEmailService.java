@@ -5,11 +5,13 @@ import javax.mail.internet.MimeMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.stereotype.Service;
 
 //classe vai somente simular envio de email através do Logger
-public class MockEmailServices extends AbstractEmailServices {
+@Service
+public class MockEmailService extends AbstractEmailService {
 
-	private static final Logger LOG = LoggerFactory.getLogger(MockEmailServices.class);
+	private static final Logger LOG = LoggerFactory.getLogger(MockEmailService.class);
 
 	@Override /*
 				 * classe abstrata implementa 1 dos metodos da interface. Essa classe extende a

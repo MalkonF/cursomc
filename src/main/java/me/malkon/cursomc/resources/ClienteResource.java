@@ -23,14 +23,14 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import me.malkon.cursomc.domain.Cliente;
 import me.malkon.cursomc.dto.ClienteDTO;
 import me.malkon.cursomc.dto.ClienteNewDTO;
-import me.malkon.cursomc.services.ClienteServices;
+import me.malkon.cursomc.services.ClienteService;
 
 @RestController
 @RequestMapping(value = "/clientes")
 public class ClienteResource {
 
 	@Autowired
-	private ClienteServices service;
+	private ClienteService service;
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Cliente> find(@PathVariable Integer id) {
@@ -56,7 +56,7 @@ public class ClienteResource {
 		return ResponseEntity.noContent().build();
 	}
 
-	@PreAuthorize("hasAnyRole('ADMIN')")
+	@PreAuthorize("hasAnyRole('ADMIN')") // so admin pode deletar
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		service.delete(id);

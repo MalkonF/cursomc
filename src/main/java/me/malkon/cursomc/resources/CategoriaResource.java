@@ -20,7 +20,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import me.malkon.cursomc.domain.Categoria;
 import me.malkon.cursomc.dto.CategoriaDTO;
-import me.malkon.cursomc.services.CategoriaServices;
+import me.malkon.cursomc.services.CategoriaService;
 
 /*Indica que a classe toda vai ser um controlador rest e vai responder pelo endpoint abaixo. Sempre use nomes de endpoints no plural*/
 @RestController
@@ -28,7 +28,7 @@ import me.malkon.cursomc.services.CategoriaServices;
 public class CategoriaResource {
 
 	@Autowired
-	private CategoriaServices service;
+	private CategoriaService service;
 
 	/*
 	 * para o método ter alguma função REST tem que associar a alguns dos verbos do
@@ -72,7 +72,8 @@ public class CategoriaResource {
 	 * JSON vai ser convertido p objeto java automaticamente
 	 */
 	@RequestMapping(method = RequestMethod.POST) // método vai ser mapeado no endpoint categorias tipo POST
-	@PreAuthorize("hasAnyRole('ADMIN')")
+	@PreAuthorize("hasAnyRole('ADMIN')") // so quem é admin pode acessar este endpoint, ou seja, cadastrar uma nova
+											// categoria
 	public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO objDto) {
 
 		Categoria obj = service.fromDTO(objDto);
