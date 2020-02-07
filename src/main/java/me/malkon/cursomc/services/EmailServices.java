@@ -3,7 +3,6 @@ package me.malkon.cursomc.services;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.mail.SimpleMailMessage;
-
 import me.malkon.cursomc.domain.Cliente;
 import me.malkon.cursomc.domain.Pedido;
 
