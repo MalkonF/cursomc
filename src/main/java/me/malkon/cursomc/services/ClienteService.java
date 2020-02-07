@@ -50,6 +50,9 @@ public class ClienteService {
 
 	@Value("${img.prefix.client.profile}")
 	private String prefix;
+	
+	@Value("${img.profile.size}")
+	private Integer size;
 
 	public Cliente find(Integer id) {
 
@@ -136,6 +139,11 @@ public class ClienteService {
 		}
 		// recebe a img jpeg a parti do arquivo enviado pelo user
 		BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
+		
+		jpgImage = imageService.cropSquare(jpgImage);
+		jpgImage = imageService.resize(jpgImage, size);
+
+
 		// monta o nome do arquivo com base no cliente q esta logado
 		String fileName = prefix + user.getId() + ".jpg";
 
