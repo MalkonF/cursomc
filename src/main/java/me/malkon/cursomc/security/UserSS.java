@@ -10,16 +10,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import me.malkon.cursomc.domain.enums.Perfil;
 
-/*Essa classe precisa implementar interface UserDetails. É contrato q o spring security
- *  precisa p trabalhar c usuarios*/
-
 public class UserSS implements UserDetails {
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
 	private String email;
 	private String senha;
-	private Collection<? extends GrantedAuthority> authorities;// armazena perfis do usuario
+	private Collection<? extends GrantedAuthority> authorities;
 
 	public UserSS() {
 	}
@@ -58,14 +55,10 @@ public class UserSS implements UserDetails {
 
 	@Override
 	public boolean isAccountNonExpired() {
-		return true;/*
-					 * aContaNEstaExpirada? true, a conta não está expirada. Aqui poderia ser
-					 * implementado a lógica que diz que o usuário pode estar com a conta expirada
-					 * Ex: Se algo acontecer, a conta esta expirada, entao retorna false
-					 */
+		return true;// sim, a conta não está expirada. Aqui poderia ser implementado a lógica
+		// que diz que o usuário pode estar com a conta expirada
 	}
 
-	/* aContaNEstaBloqueada? true, a conta n esta bloqueada */
 	@Override
 	public boolean isAccountNonLocked() {
 		return true;

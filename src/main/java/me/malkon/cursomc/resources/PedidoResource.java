@@ -16,14 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import me.malkon.cursomc.domain.Pedido;
-import me.malkon.cursomc.services.PedidoService;
+import me.malkon.cursomc.services.PedidoServices;
 
 @RestController
 @RequestMapping(value = "/pedidos")
 public class PedidoResource {
 
 	@Autowired
-	private PedidoService service;
+	private PedidoServices service;
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Pedido> find(@PathVariable Integer id) {
@@ -36,8 +36,8 @@ public class PedidoResource {
 
 	/*
 	 * As info no body do POST vao vai ter @type
-	 * "pagamentoComCartao ou pagamentoComBoleto" p indicar ao Jackson(pct
-	 * implementa json) q é pra instanciar uma das 2 classes
+	 * "pagamentoComCartao ou pagamentoComBoleto" p indicar ao Jackson(pct implementa
+	 * json) q é pra instanciar uma das 2 classes
 	 */
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@Valid @RequestBody Pedido obj) {
@@ -46,8 +46,6 @@ public class PedidoResource {
 		return ResponseEntity.created(uri).build();
 	}
 
-	// endpoit atende pelo endereco pedidos q esta marcado na classe. Retorna uma
-	// lista de pedidos do cliente
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Page<Pedido>> findPage(@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,

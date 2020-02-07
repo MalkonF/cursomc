@@ -10,8 +10,7 @@ import me.malkon.cursomc.domain.Cliente;
 import me.malkon.cursomc.repositories.ClienteRepository;
 import me.malkon.cursomc.security.UserSS;
 
-/*Classe serve para buscar usuário e retornar detalhes.
- * Sobrescreve metodo padrao de UserDetailsService p buscar um usuario na base de dados*/
+/*Classe serve para buscar usuário e retornar detalhes*/
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 

@@ -9,7 +9,7 @@ import me.malkon.cursomc.domain.PagamentoComBoleto;
 
 /*No mundo real teriamos um webservice que gerava o boleto e já mandava a data de vencimento*/
 @Service
-public class BoletoService {
+public class BoletoServices {
 
 	public void preencherPagamentoComBoleto(PagamentoComBoleto pagto, Date instanteDoPedido) {
 		Calendar cal = Calendar.getInstance();

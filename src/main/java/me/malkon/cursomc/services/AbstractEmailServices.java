@@ -18,7 +18,7 @@ import me.malkon.cursomc.domain.Cliente;
 import me.malkon.cursomc.domain.Pedido;
 
 @Service
-public abstract class AbstractEmailService implements EmailService {
+public abstract class AbstractEmailServices implements EmailServices {
 
 	@Value("${default.sender}") // pega o valor de application.properties
 	private String sender;
@@ -29,18 +29,12 @@ public abstract class AbstractEmailService implements EmailService {
 	@Autowired
 	private JavaMailSender javaMailSender;
 
-	@Override // implementacao comum do mockmail e smtpmail por isso esta na classe abstrata
+	@Override
 	public void sendOrderConfirmationEmail(Pedido obj) {
 		SimpleMailMessage sm = prepareSimpleMailMessageFromPedido(obj);
 		sendEmail(sm);
 	}
 
-	/*
-	 * Padrao template method
-	 * 
-	 * Antes de enviar o email ele tem que ser prepararado a parti de pedido prepara
-	 * o e-mail com assunto, remetente etc
-	 */
 	protected SimpleMailMessage prepareSimpleMailMessageFromPedido(Pedido obj) {
 
 		SimpleMailMessage sm = new SimpleMailMessage();
@@ -52,37 +46,7 @@ public abstract class AbstractEmailService implements EmailService {
 		return sm;
 	}
 
-	/* Aqui o template será preechido com as info do backend */
-	protected String htmlFromTemplatePedido(Pedido obj) {
-		/* Context vai permitir acessar template thymeleaf */
-		Context context = new Context();
-		context.setVariable("pedido", obj);// obj será referenciado como pedido no template
-		return templateEngine.process("email/confirmacaoPedido", context);
-		// retorna html na forma de string
-	}
-
-	@Override
-	public void sendOrderConfirmationHtmlEmail(Pedido obj) {
-		try {
-			MimeMessage mm = prepareMimeMailMessageFromPedido(obj);
-			sendHtmlEmail(mm);
-		} catch (MessagingException o) {
-			sendOrderConfirmationEmail(obj);// tenta mandar email html se n der manda txt plano
-		}
-	}
-
-	/* Protected abre a possibilidade do metodo ser implementado numa subclasse */
-	protected MimeMessage prepareMimeMailMessageFromPedido(Pedido obj) throws MessagingException {
-		MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-		MimeMessageHelper mmh = new MimeMessageHelper(mimeMessage, true);// p poder atrribuir valores na msg
-		mmh.setTo(obj.getCliente().getEmail());
-		mmh.setFrom(sender);
-		mmh.setSubject("Pedido confirmado! Código " + obj.getId());
-		mmh.setSentDate(new Date(System.currentTimeMillis()));
-		mmh.setText(htmlFromTemplatePedido(obj), true);
-		return mimeMessage;
-	}
-
+	// prepara o e-mail com assunto, remetente etc
 	@Override
 	public void sendNewPasswordEmail(Cliente cliente, String newPass) {
 		SimpleMailMessage sm = prepareNewPasswordEmail(cliente, newPass);
@@ -99,4 +63,32 @@ public abstract class AbstractEmailService implements EmailService {
 		return sm;
 	}
 
+	/* Aqui o template será preechido com as info do backend */
+	protected String htmlFromTemplatePedido(Pedido obj) {
+
+		Context context = new Context();
+		context.setVariable("pedido", obj);// obj será referenciado como pedido no template
+		return templateEngine.process("email/confirmacaoPedido", context);
+	}
+
+	@Override
+	public void sendOrderConfirmationHtmlEmail(Pedido obj) {
+		try {
+			MimeMessage mm = prepareMimeMailMessageFromPedido(obj);
+			sendHtmlEmail(mm);
+		} catch (MessagingException o) {
+			sendOrderConfirmationEmail(obj);
+		}
+	}
+
+	protected MimeMessage prepareMimeMailMessageFromPedido(Pedido obj) throws MessagingException {
+		MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+		MimeMessageHelper mmh = new MimeMessageHelper(mimeMessage, true);
+		mmh.setTo(obj.getCliente().getEmail());
+		mmh.setFrom(sender);
+		mmh.setSubject("Pedido confirmado! Código " + obj.getId());
+		mmh.setSentDate(new Date(System.currentTimeMillis()));
+		mmh.setText(htmlFromTemplatePedido(obj), true);
+		return mimeMessage;
+	}
 }

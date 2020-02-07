@@ -24,13 +24,13 @@ import me.malkon.cursomc.security.UserSS;
 import me.malkon.cursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
-public class PedidoService {
+public class PedidoServices {
 
 	@Autowired
 	private PedidoRepository repo;
 
 	@Autowired
-	private BoletoService boletoService;
+	private BoletoServices boletoService;
 
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
@@ -39,13 +39,13 @@ public class PedidoService {
 	private ItemPedidoRepository itemPedidoRepository;
 
 	@Autowired
-	private ProdutoService produtoService;
+	private ProdutoServices produtoService;
 
 	@Autowired
-	private ClienteService clienteService;
+	private ClienteServices clienteService;
 
 	@Autowired
-	private EmailService emailService;// está interface será instanciada como MockMailServices em TestConfig
+	private EmailServices emailService;// está interface será instanciada como MockMailServices em TestConfig
 
 	public Pedido find(Integer id) {
 

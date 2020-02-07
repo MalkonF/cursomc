@@ -16,7 +16,7 @@ import me.malkon.cursomc.repositories.ProdutoRepository;
 import me.malkon.cursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
-public class ProdutoService {
+public class ProdutoServices {
 
 	@Autowired
 	private ProdutoRepository repo;

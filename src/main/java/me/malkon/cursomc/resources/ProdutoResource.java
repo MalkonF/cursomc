@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 import me.malkon.cursomc.domain.Produto;
 import me.malkon.cursomc.dto.ProdutoDTO;
 import me.malkon.cursomc.resources.utils.URL;
-import me.malkon.cursomc.services.ProdutoService;
+import me.malkon.cursomc.services.ProdutoServices;
 
 @RestController
 @RequestMapping(value = "/produtos")
 public class ProdutoResource {
 
 	@Autowired
-	private ProdutoService service;
+	private ProdutoServices service;
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Produto> find(@PathVariable Integer id) {

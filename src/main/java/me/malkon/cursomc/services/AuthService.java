@@ -21,7 +21,7 @@ public class AuthService {
 	private BCryptPasswordEncoder pe;
 
 	@Autowired
-	private EmailService emailService;
+	private EmailServices emailService;
 
 	private Random rand = new Random();
 
