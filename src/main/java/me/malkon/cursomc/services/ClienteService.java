@@ -120,9 +120,19 @@ public class ClienteService {
 		newObj.setEmail(obj.getEmail());
 	}
 
-	// ele vai repassar a chamada p o s3 service. Foi feito aqui so p questao d
-	// organizar ja q quem vai mandar a foto é um cliente
 	public URI uploadProfilePicture(MultipartFile multipartFile) {
-		return s3Service.uploadFile(multipartFile);
+		UserSS user = UserService.authenticated();// verifica se o cliente ta autenticado, pq ele tem q ta autenticado p
+													// mudar sua imagem de perfil
+		if (user == null) {
+			throw new AuthorizationException("Acesso negado");
+		}
+
+		URI uri = s3Service.uploadFile(multipartFile);
+		// salva a url da imagem no bd
+		Cliente cli = find(user.getId());
+		cli.setImageUrl(uri.toString());
+		repo.save(cli);
+
+		return uri;
 	}
 }

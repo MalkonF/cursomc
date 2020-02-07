@@ -51,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	// quais endpoints vão estar liberados publicamente p consulta
 	private static final String[] PUBLIC_MATCHERS = { "/h2-console/**" };
 	private static final String[] PUBLIC_MATCHERS_GET = { "/produtos/**", "/categorias/**" };
-	private static final String[] PUBLIC_MATCHERS_POST = { "/clientes/**","/clientes/picture", "/auth/forgot/**" };
+	private static final String[] PUBLIC_MATCHERS_POST = { "/clientes/**", "/auth/forgot/**" };
 	// clientes esta aqui pq n e liberado publico fzr get de clientes, mas é
 	// liberado fazer post de um cliente(cadastrar cliente)
 
