@@ -139,6 +139,7 @@ public class Pedido implements Serializable {
 		return true;
 	}
 
+	/* o toString de PEdidos vai ser o corpo do email de confirmacao de compra */
 	@Override
 	public String toString() {
 		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));

@@ -151,7 +151,11 @@ public class ClienteService {
 		newObj.setNome(obj.getNome());
 		newObj.setEmail(obj.getEmail());
 	}
-
+	/*
+	 * ao inves de salvar a URL na entidade cliente, vamos adotar um padrao de nome
+	 * de img, assim podemos usar o id do cliente p localizar essa imagem q vai esta
+	 * na amazon cp<seguido da id do cliente>.jpg
+	 */
 	public URI uploadProfilePicture(MultipartFile multipartFile) {
 		UserSS user = UserService.authenticated();// verifica se o cliente ta autenticado, pq ele tem q ta autenticado p
 													// mudar sua imagem de perfil
