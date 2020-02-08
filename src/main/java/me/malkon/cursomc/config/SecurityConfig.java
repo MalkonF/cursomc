@@ -50,7 +50,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private JWTUtil jwtUtil;
 	// quais endpoints vão estar liberados publicamente p consulta
 	private static final String[] PUBLIC_MATCHERS = { "/h2-console/**" };
-	private static final String[] PUBLIC_MATCHERS_GET = { "/produtos/**", "/categorias/**" };
+	// necessario liberar endpoint estado pq qnd o cliente for se cadastrar a app
+	// vai buscar no bd os estados e cidades
+	private static final String[] PUBLIC_MATCHERS_GET = { "/produtos/**", "/categorias/**", "/estados/**" };
 	private static final String[] PUBLIC_MATCHERS_POST = { "/clientes/**", "/auth/forgot/**" };
 	// clientes esta aqui pq n e liberado publico fzr get de clientes, mas é
 	// liberado fazer post de um cliente(cadastrar cliente)
