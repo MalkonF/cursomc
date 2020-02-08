@@ -50,7 +50,7 @@ public class ClienteService {
 
 	@Value("${img.prefix.client.profile}")
 	private String prefix;
-	
+
 	@Value("${img.profile.size}")
 	private Integer size;
 
@@ -100,6 +100,27 @@ public class ClienteService {
 		return repo.findAll();
 	}
 
+	/*
+	 * a app vai armazenar o carrinho de compras e o tok do user logado. O token
+	 * carrega dentro dele o tempo de expiracao e o nome de usuario. Os dados como
+	 * codigo cliente, nome do cliente n vao estar armazenados localmente na
+	 * aplicação, entao vai ser criado um endpoint p buscar os dados do cliente
+	 * passando o email como argumento.
+	 */
+	public Cliente findByEmail(String email) {
+		UserSS user = UserService.authenticated();
+		if (user == null || !user.hasRole(Perfil.ADMIN) && !email.equals(user.getUsername())) {
+			throw new AuthorizationException("Acesso negado");
+		}
+
+		Cliente obj = repo.findByEmail(email);
+		if (obj == null) {
+			throw new ObjectNotFoundException(
+					"Objeto não encontrado! Id: " + user.getId() + ", Tipo: " + Cliente.class.getName());
+		}
+		return obj;
+	}
+
 	public Page<Cliente> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
@@ -139,10 +160,9 @@ public class ClienteService {
 		}
 		// recebe a img jpeg a parti do arquivo enviado pelo user
 		BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
-		
+
 		jpgImage = imageService.cropSquare(jpgImage);
 		jpgImage = imageService.resize(jpgImage, size);
-
 
 		// monta o nome do arquivo com base no cliente q esta logado
 		String fileName = prefix + user.getId() + ".jpg";
