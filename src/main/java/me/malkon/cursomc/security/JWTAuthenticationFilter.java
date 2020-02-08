@@ -64,6 +64,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		String username = ((UserSS) auth.getPrincipal()).getUsername();
 		String token = jwtUtil.generateToken(username);
 		res.addHeader("Authorization", "Bearer " + token);// o token vai ficar no cabeçalho
+		res.addHeader("access-control-expose-headers", "Authorization");
 	}
 	/*
 	 * Se a autenticacao falhar, retorna 401. Classe que personaliza o q vai retorna
