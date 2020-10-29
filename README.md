@@ -24,7 +24,7 @@ O projeto pode ser aberto pelo [**STS(Spring Tools Suite)**](https://spring.io/t
 
 ### Baixando as dependências
 
-Normalmente, o STS baixa as dependências automaticamente ao abrir o projeto, mas se isso não acontecer, clique com botão direito sobre o projeto, vá na opção _Maven_ e depois em _Update Project_. 
+Normalmente, o STS baixa as dependências automaticamente ao abrir o projeto, mas se isso não acontecer, clique com botão direito sobre o projeto, vá na opção _Maven_ e depois em _Update Project_.
 
 Para executar clique com botão direito sobre o projeto e escolha _Run as - Spring Boot App_ . A partir daí os endpoints que não precisam de autenticação já podem ser acessados tanto pelo brownser como pelo Postman. Como por exemplo: _http://localhost:8080/produtos?categorias=1_
 
@@ -32,7 +32,7 @@ Para executar clique com botão direito sobre o projeto e escolha _Run as - Spri
 
 Para acessar endpoints que precisam de autenticaçao, faça:
 
- Uma requisição ao endpoint _http://localhost:8080/login_ e no corpo da requisição coloque algum usuário cadastrado, exemplo:
+Uma requisição ao endpoint _http://localhost:8080/login_ e no corpo da requisição coloque algum usuário cadastrado, exemplo:
 
 ![](postman2.png)
 
@@ -40,7 +40,15 @@ Após isso vai ser retornado um token. Copie o token e cole ele em um campo cham
 
 ![](postman3.png)
 
-O projeto também pode ser executado diretamente do cmd usando o maven do próprio projeto. Acesse o diretório bin da pasta principal do projeto e entre com:
+O projeto também pode ser executado diretamente do cmd usando o maven do próprio projeto. Acesse o diretório raiz do projeto e entre com:
+
+**Windows**
+
+```
+mvnw.cmd spring-boot:run
+```
+
+**Linux**
 
 ```
 mvnw spring-boot:run
@@ -59,11 +67,12 @@ depois configure as credenciais de acesso(usuário e senha) no arquivo _.propert
 
 ## Onde me encontrar?
 
-**Twitter** – [@RapazComum6](https://twitter.com/RapazComum6)
-**E-mail** - malkon.inf@gmail.com
-**Linkedin** - [Malkon Faria](https://www.linkedin.com/in/malkon-faria-1843b81a7/
+-Twitter – [@RapazComum6](https://twitter.com/RapazComum6)
+-E-mail - malkon.inf@gmail.com
+-Linkedin - [Malkon Faria](https://www.linkedin.com/in/malkon-faria-1843b81a7/)
 
 <!-- Markdown link & img dfn's -->
+
 [java]: https://img.shields.io/badge/Java-Java%201.8-green
 [spring]: https://img.shields.io/badge/spring--boot-2.1.13-green
 [aws]: https://img.shields.io/badge/Amazon-AWS-brightgreen
