@@ -67,9 +67,9 @@ depois configure as credenciais de acesso(usuário e senha) no arquivo _.propert
 
 ## Onde me encontrar?
 
--Twitter – [@RapazComum6](https://twitter.com/RapazComum6)
--E-mail - malkon.inf@gmail.com
--Linkedin - [Malkon Faria](https://www.linkedin.com/in/malkon-faria-1843b81a7/)
+- Twitter – [@RapazComum6](https://twitter.com/RapazComum6)
+- E-mail - malkon.inf@gmail.com
+- Linkedin - [Malkon Faria](https://www.linkedin.com/in/malkon-faria-1843b81a7/)
 
 <!-- Markdown link & img dfn's -->
 
