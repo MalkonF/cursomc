@@ -26,7 +26,7 @@ O projeto pode ser aberto pelo [**STS(Spring Tools Suite)**](https://spring.io/t
 
 Normalmente, o STS baixa as dependências automaticamente ao abrir o projeto, mas se isso não acontecer, clique com botão direito sobre o projeto, vá na opção _Maven_ e depois em _Update Project_.
 
-Para executar clique com botão direito sobre o projeto e escolha _Run as - Spring Boot App_ . A partir daí os endpoints que não precisam de autenticação já podem ser acessados tanto pelo brownser como pelo Postman. Como por exemplo: _http://localhost:8080/produtos?categorias=1_
+Para executar clique com botão direito sobre o projeto e escolha _Run as - Spring Boot App_ . A partir daí os endpoints que não precisam de autenticação já podem ser acessados tanto pelo brownser como pelo [Postman](https://www.postman.com/downloads/). Como por exemplo: _http://localhost:8080/produtos?categorias=1_
 
 ![](postman.png)
 
