@@ -22,7 +22,8 @@ import me.malkon.cursomc.domain.Categoria;
 import me.malkon.cursomc.dto.CategoriaDTO;
 import me.malkon.cursomc.services.CategoriaService;
 
-/*Indica que a classe toda vai ser um controlador rest e vai responder pelo endpoint abaixo. Sempre use nomes de endpoints no plural*/
+/*Indica que a classe toda vai ser um controlador rest e vai responder pelo endpoint abaixo. 
+ * Sempre use nomes de endpoints no plural*/
 @RestController
 @RequestMapping(value = "/categorias")
 public class CategoriaResource {
@@ -72,7 +73,7 @@ public class CategoriaResource {
 	 * JSON vai ser convertido p objeto java automaticamente
 	 */
 	@RequestMapping(method = RequestMethod.POST) // método vai ser mapeado no endpoint categorias tipo POST
-	@PreAuthorize("hasAnyRole('ADMIN')")// so quem é admin pode acessar este endpoint, ou seja, cadastrar uma nova
+	@PreAuthorize("hasAnyRole('ADMIN')") // so quem é admin pode acessar este endpoint, ou seja, cadastrar uma nova
 	public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO objDto) {
 
 		Categoria obj = service.fromDTO(objDto);

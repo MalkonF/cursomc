@@ -3,8 +3,8 @@ package me.malkon.cursomc.domain.enums;
 public enum TipoCliente {
 	/*
 	 * Por padrão, se tiver somente as constantes como: PESSOAFISICA,
-	 * PESSOAJURIDICA, no banco de dados vai gravar ou um campo string na tabela q
-	 * ele é referenciado(Cliente) com o próprio nome da constante ou um número int
+	 * PESSOAJURIDICA, no banco de dados vai gravar um campo string na tabela q
+	 * ele é referenciado(Cliente) com o próprio nome da constante ou  é gravado um número int
 	 * começando a primeira constante com 0. No caso do valor em int n é recomendado
 	 * pq se for adicionado mais alguma constante a ordem das ids vão ser
 	 * modificadas tb e isso vai invalidar as informações no bd. Por isso é

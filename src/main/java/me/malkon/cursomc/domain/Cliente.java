@@ -55,7 +55,8 @@ public class Cliente implements Serializable {
 	/*
 	 * @JsonManagedReference cli serializa vários endereços, mas end n podem
 	 * serializar mais de 1 cli. Na classe endereço fica o @JsonBackReference
-	 * dizendo que ele n pode serializar os clientes
+	 * dizendo que ele n pode serializar os clientes. E na parte cliente fica
+	 * @JsonManagedReference
 	 * 
 	 * cascadeType.All toda operação q for feita no cliente vai ser refletida no
 	 * endereço, se excluir cliente os endereços anexados vao ser excluídos. Qd tem

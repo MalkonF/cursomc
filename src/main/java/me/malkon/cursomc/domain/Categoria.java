@@ -57,7 +57,7 @@ public class Categoria implements Serializable {
 	}
 
 	public String getNome() {
-		return nome;
+        return nome;
 	}
 
 	public void setNome(String nome) {

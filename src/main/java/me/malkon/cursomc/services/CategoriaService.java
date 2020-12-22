@@ -23,11 +23,14 @@ public class CategoriaService {
 	private CategoriaRepository repo;
 
 	/*
-	 * findById retorna um objeto Optional do tipo que está especificado. Se o obj
-	 * não existir vai lançar uma exceção. O método orElseThrow recebe uma
-	 * função(sem argumentos) que instancia uma exceção. getName retorna o nome da
-	 * classe. No REST vai ter q capturar essa exceção qnd ocorrer e mandar uma
-	 * resposta http adequada
+	 * findById retorna um objeto Optional do tipo que está especificado. Optional é
+	 * um obj do tipo container que vai carregar objetos do tipo que vc informar,
+	 * mas ele encapsula a informação se o obj está intanciado ou n. Um dos motivos
+	 * de usar Optional é para evitar o problema do obj nulo. Se o obj não existir
+	 * vai lançar uma exceção. O método orElseThrow recebe uma função(sem
+	 * argumentos) que instancia uma exceção. getName retorna o nome da classe. No
+	 * REST vai ter q capturar essa exceção qnd ocorrer e mandar uma resposta http
+	 * adequada
 	 */
 	public Categoria find(Integer id) {
 		Optional<Categoria> obj = repo.findById(id);
@@ -62,7 +65,8 @@ public class CategoriaService {
 		find(id);// verifica se o id existe, se n existir dispara exceção
 		try {
 			repo.deleteById(id);
-		} catch (DataIntegrityViolationException e) {
+		} catch (DataIntegrityViolationException e) { // Quando acontecer a exceção do spring data aqui é capturado
+														// e após isso é lançada a exceção personalizada
 			throw new DataIntegrityException("Não é possível excluir uma categoria que possui produtos");
 		} /*
 			 * A categoria de um produto n pode ser excluída por causa da integridade

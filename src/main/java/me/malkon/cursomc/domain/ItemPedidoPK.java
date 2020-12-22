@@ -6,11 +6,16 @@ import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+/* essa anotação é colocada qnd vc tem como atributo de uma classe outra classe. No caso ItemPedidoPK é o atributo
+da classe ItemPedido */
 @Embeddable
 public class ItemPedidoPK implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	/*Referencia p o pedido e o produto, onde ela ta no meio de campo. O pedido e produto q identifica o itempedido*/
+	/*
+	 * Referencia p o pedido e o produto, onde ela ta no meio de campo. O pedido e
+	 * produto q identifica o itempedido
+	 */
 	@ManyToOne
 	@JoinColumn(name = "pedido_id")
 	private Pedido pedido;
@@ -18,7 +23,6 @@ public class ItemPedidoPK implements Serializable {
 	@JoinColumn(name = "produto_id")
 	private Produto produto;
 
-	
 	public Pedido getPedido() {
 		return pedido;
 	}
@@ -34,7 +38,7 @@ public class ItemPedidoPK implements Serializable {
 	public void setProduto(Produto produto) {
 		this.produto = produto;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -66,6 +70,8 @@ public class ItemPedidoPK implements Serializable {
 		return true;
 	}
 
-
 }
-/*hashcode e equals tem que ser com base nos 2 atributos p ver se um item é diferente*/
+/*
+ * hashcode e equals tem que ser com base nos 2 atributos p ver se um item é
+ * diferente
+ */
